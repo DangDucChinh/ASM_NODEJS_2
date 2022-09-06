@@ -1,0 +1,66 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+   <%- include('./includes/navigation.ejs') %>
+
+    <main>
+        <h3>Admin có quyền thêm nhân viên, sau đó phân phát cho nhân viên email và mật khẩu tạm thời</h3><hr><hr>
+        <h3></h3>
+        <form class="product-form" action="/add-staff" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="idAdmin" value="<%= idAdmin %>">
+            <input type="hidden" name="nameAdmin" value="<%= nameAdmin %>">
+
+            <label for="name">Email : </label>
+            <div class="form-control">
+                <input type="email" name="email" id="email" value="chinh22082001@gmail.com"/>
+            </div>
+            <label for="password">Password : </label>
+            <div class="form-control">
+                <input type="password" name="password" id="password" value="12345"/>
+            </div>
+
+            <label for="name">Name</label>
+            <div class="form-control">
+                <input type="text" name="name" id="name" value="Đặng Đức Chính"/>
+            </div>
+            <label for="doB">doB</label>
+            <div class="form-control">
+                <input type="date" name="doB" id="doB" value="2001-08-22"/>
+            </div>
+            <label for="salaryScale">salaryScale</label>
+            <div class="form-control">
+                <input type="number" name="salaryScale" id="salaryScale" step="0.1" min="0" value="100000"/>
+            </div>
+            <label for="startDate">startDate</label>
+            <div class="form-control">
+                <input type="date" name="startDate" id="startDate" value="2022-08-22"/>
+            </div>
+            <label for="department">department</label>
+            <div class="form-control">
+                <input type="text" name="department" id="department" value="CEO"/>
+            </div>
+            <label for="annualLeave">annualLeave</label>
+            <div class="form-control">
+                <input type="number" name="annualLeave" id="annualLeave" value="10"/>
+            </div>
+            <label for="image">Image*</label>
+            <div class="form-control">
+                <input 
+                    type="file" 
+                    name="image" 
+                    id="image"  />
+            </div>
+
+            <button class="btn" type="submit">Add Staff</button>
+        </form>
+    </main>
+
+    <!-- <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Name" name="name" id='name' required />
+        <label for="name" class="form__label">Name</label>
+    </div> -->
+<%- include('./includes/end.ejs') %>

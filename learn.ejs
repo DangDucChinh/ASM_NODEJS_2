@@ -1,0 +1,50 @@
+<h1></h1>
+
+
+
+<section>
+    <a href="/?page=1">1</a>
+    <a href="/?page=2">1</a>
+    <!-- req.query.page -->
+    https://localhost:3000/?page=1
+</section>
+
+
+<section>
+const page = query.page ; 
+tạo 1 biến cosnst ITEMS_PER_PAGE = 2
+
+mongo có thể giới hạn dữ liệu cần tìm : 
+Staff.find().skip((page-1) * ITEMS_PER_PAGE).limit(ITEMS_PER_PAGE)
+// nếu tôi ở trang 2, tôi bỏ qua các mục ... 
+
+// giới hạn số lượng mục hiển thị trên mỗi trang
+
+</section>
+
+-- 
+let totalItems ; 
+Satff.find().count().then(numProduct=>{
+    totalItems = numProduct ; 
+    return Staff.find().skip((page-1) + ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE); 
+
+
+})
+.then(products=>{
+    res.render('',{
+        currentPage : page ,
+        totalProducts : totalItems ,
+        hasNextPage : ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage : page > 1 , 
+        nextPage : page + 1 , 
+        previousPage : page - 1 , 
+        lastPage : Math.ceil(totalItems / ITEMS_PER_PAGE)
+    })
+})
+.catch(err=>{
+    console.log(err) ; 
+})
+
+
+--------------------------------------- EJS ---------------------------------------

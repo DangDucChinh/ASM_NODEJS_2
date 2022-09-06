@@ -1,0 +1,209 @@
+<%- include('../includes/head.ejs') %>
+    <style>
+        .form-control {
+            margin: 5px auto;
+            height: min-content;
+        }
+
+        .form-control label,
+        .form-control input {
+            display: block;
+            width: 90%;
+        }
+
+        .form-control input {
+            margin: 3px auto;
+            border-radius: 3px;
+            border: 1px solid grey;
+        }
+
+        button {
+            border-radius: 3px;
+            border: 1px solid #5454ad;
+            background-color: #00695c;
+            color: #ffeb3b;
+        }
+
+        .card__image {
+            width: 100%;
+            height: 10rem;
+            text-align: left;
+        }
+
+
+        .card {
+            padding: 10px;
+        }
+
+        article {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .center-report {
+            text-align: center;
+        }
+
+
+    </style>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <main>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <h3>Ghi chú covid cá nhân : </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <h4>Họ tên : <%= nameStaff %>
+                            </h4>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <form action="/covid-info/temperature" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <div class="form-control">
+                                    <lable for="nhietdo">Nhiệt Độ</lable>
+                                    <input type="text" name="nhietdo" id="nhietdo" />
+                                </div>
+                                <div class="form-control">
+                                    <lable for="time">Giờ Đo</lable>
+                                    <input type="time" name="time" id="time" />
+                                </div>
+                                <div class="form-control">
+                                    <lable for="date">Ngày Đo</lable>
+                                    <input type="date" name="date" id="date" />
+                                </div>
+                                <button type="submit">Đăng Ký</button>
+                            </form>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <form action="/covid-info/vaccineInfo" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <div class="form-control">
+                                    <lable for="mui1">Tên Vaccine Mũi 1</lable>
+                                    <input type="text" name="mui1" id="mui1" />
+                                </div>
+                                <div class="form-control">
+                                    <lable for="date1">Ngày</lable>
+                                    <input type="date" name="date1" id="date1" />
+                                </div>
+                                <div class="form-control">
+                                    <lable for="mui2">Tên Vaccine Mũi 2</lable>
+                                    <input type="text" name="mui2" id="mui2" />
+                                </div>
+                                <div class="form-control">
+                                    <lable for="date2">Ngày</lable>
+                                    <input type="date" name="date2" id="date2" />
+                                </div>
+                                <button type="submit">Đăng ký</button>
+                            </form>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <form action="/covid-info/infectCovidInfo" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <div class="form-control">
+                                    <lable for="nhiemcovid">Ngày Nhiễm Covid</lable>
+                                    <input type="date" name="nhiemcovid" id="nhiemcovid" />
+                                </div>
+                                <div class="form-control">
+                                    <lable for="hetbenh">Ngày Khỏi Bệnh</lable>
+                                    <input type="date" name="hetbenh" id="hetbenh" />
+                                </div>
+                                <button type="submit">Đăng Ký</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+
+                <% if(staffs.length> 0){ %>
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <h3>Danh sách thông tin covid của nhân viên : </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <% for (let staff of staffs) { %>
+                            <article class="card product-item">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="card__image">
+                                            <img src="/<%= staff.image %>" alt="<%= staff.name %>">
+                                            <p>
+                                                <%= staff.name %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-8">
+                                        
+                                        <h4>Thân nhiệt : <%= staff.bodyTemperature[staff.bodyTemperature.length -
+                                                1].temperature %> ^C
+                                        </h4>
+                                        <h4>Ngày đo : <%= staff.bodyTemperature[staff.bodyTemperature.length -
+                                                1].date.getDate() %> / <%=
+                                                    staff.bodyTemperature[staff.bodyTemperature.length -
+                                                    1].date.getMonth() %> / <%=
+                                                        staff.bodyTemperature[staff.bodyTemperature.length -
+                                                        1].date.getFullYear() %>
+                                        </h4>
+                                        <h4>Vacxin 1 : <%= staff.vaccineInfo[staff.vaccineInfo.length - 1].nameVaccine1
+                                                %>
+                                        </h4>
+                                        <h4>Ngay tiem vacxin 1 : <%= staff.vaccineInfo[staff.vaccineInfo.length -
+                                                1].date1.getDate() %> / <%= staff.vaccineInfo[staff.vaccineInfo.length -
+                                                    1].date1.getMonth() %> / <%=
+                                                        staff.vaccineInfo[staff.vaccineInfo.length -
+                                                        1].date1.getFullYear() %>
+                                        </h4>
+                                        <h4>Vacxin 2 : <%= staff.vaccineInfo[staff.vaccineInfo.length - 1].nameVaccine2
+                                                %>
+                                        </h4>
+                                        <h4>Ngày tiêm vacxin 2 : <%= staff.vaccineInfo[staff.vaccineInfo.length -
+                                                1].date2.getDate() %> / <%= staff.vaccineInfo[staff.vaccineInfo.length -
+                                                    1].date2.getMonth() %> / <%=
+                                                        staff.vaccineInfo[staff.vaccineInfo.length -
+                                                        1].date2.getFullYear() %>
+                                        </h4>
+                                        <h4>Ngày nhiễm covid : <%= staff.infectCovidInfo[staff.infectCovidInfo.length -
+                                                1].datePositive.getDate() %> / <%=
+                                                    staff.infectCovidInfo[staff.infectCovidInfo.length -
+                                                    1].datePositive.getMonth() %> / <%=
+                                                        staff.infectCovidInfo[staff.infectCovidInfo.length -
+                                                        1].datePositive.getFullYear() %>
+                                        </h4>
+                                        <h4>Ngày khỏi covid : <%= staff.infectCovidInfo[staff.infectCovidInfo.length -
+                                                1].dateRecover.getDate() %> / <%=
+                                                    staff.infectCovidInfo[staff.infectCovidInfo.length -
+                                                    1].dateRecover.getMonth() %> / <%=
+                                                        staff.infectCovidInfo[staff.infectCovidInfo.length -
+                                                        1].dateRecover.getFullYear() %>
+                                        </h4>
+                                    </div>
+                                    <div class="center-report">
+                                        <div>
+                                            <a href="/covid-info/<%= staff._id %>">       --Report</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <% } %>
+
+                    </div>
+                    <% } %>
+                        </div>
+                        </div>
+                        </div>
+            </main>
+
+            <%- include('../includes/end.ejs') %>

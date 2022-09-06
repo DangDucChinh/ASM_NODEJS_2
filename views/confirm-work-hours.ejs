@@ -1,0 +1,143 @@
+<%- include('./includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('./includes/navigation.ejs') %>
+            <main>
+                <form action="/confirm-work-hours" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <select name="staff_id" id="staff_id">
+                        <optgroup label="Nhân viên">
+                            <% for (let s of staffs) { %>
+                                <option value="<%= s.id %>">
+                                    <%= s.name %>
+                                </option>
+                                <% } %>
+                        </optgroup>
+                    </select>
+                    <button type="submit">Chọn nhân viên</button>
+                </form>
+
+               
+
+
+               
+                <!-- <% for (let s of staffs) { %>
+                <h1><%= s._id %></h1>
+                <% } %> -->
+
+                <% for (let staff of staffs) { %>
+                    <% if(staff._id.toString()===staff_id.toString() ){ %>
+                        <hr>
+                        <h1>Nhân viên : 
+                            <%= staff.name %>
+                        </h1>
+                        <hr>
+
+
+                        <div class="col-12 col-md-9 col-lg-9">
+                            <h3 class="title my-3">Danh sách giờ đã làm</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Ngày</th>
+                                        <th>Giờ bắt đầu</th>
+                                        <th>Giờ kết thúc</th>
+                                        <th>Nơi làm việc</th>
+                                        <th>Giờ làm được</th>
+                                    </tr>
+                                </thead>
+                                <% staff.workTimes.forEach(workTime=> { %>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <%= workTime.startTime.getDate() + "/" +
+                                                workTime.startTime.getMonth() + "/" +
+                                                workTime.startTime.getFullYear() %>
+                                            </td>
+                                            <td>
+                                                <%= workTime.startTime.getHours() + ":" +
+                                                    workTime.startTime.getMinutes()%>
+                                            </td>
+                                            <td>
+                                                <%= workTime.endTime===null ? "--" : workTime.endTime.getHours() + ":" +
+                                                    workTime.endTime.getMinutes() %>
+                                            </td>
+                                            <td>
+                                                <%= workTime.workPlace %>
+                                            </td>
+                                            <td>
+                                                <% if (workTime.endTime===null) { %>
+                                                    --
+                                                    <% } else { %>
+                                                        <%= workTime.hours %> h
+                                                            <% } %>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <% }); %>
+                            </table>
+                            <form action="/confirm" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="staff_id" value="<%= staff._id %>">
+                                <button type="submit">Xóa giờ làm</button>
+                            </form>
+                            <hr>
+                            <p><b>Tổng số giờ đã làm ngày hôm nay: </b>
+                                <%= staff.totalTimesWork %> h
+                            </p>
+                            <hr>
+                            <p><b>Số Giờ làm thêm: </b>
+                                <%= staff.totalTimesWork> 8 ? staff.totalTimesWork - 8 + " h" : "--" %>
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <h3 class="title my-3">Danh sách đăng ký nghỉ phép</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Ngày</th>
+                                        <th>Số Giờ</th>
+                                        <th>Lý do</th>
+                                    </tr>
+                                </thead>
+
+                                <tr>
+                                    <%staff.leaveInfoList.forEach(leaveInfo=> {%>
+                                        <tbody>
+                                            <td>
+                                                <%= leaveInfo.dayStartLeave.getDate() + "/" +
+                                                    leaveInfo.dayStartLeave.getMonth() + "/" +
+                                                    leaveInfo.dayStartLeave.getFullYear() %> - <%=
+                                                        leaveInfo.dayEndLeave.getDate() + "/" +
+                                                        leaveInfo.dayEndLeave.getMonth() + "/" +
+                                                        leaveInfo.dayEndLeave.getFullYear() %>
+                                            </td>
+                                            <td>
+                                                <%= leaveInfo.timesLeave %>
+                                            </td>
+                                            <td>
+                                                <%= leaveInfo.reason %>
+                                            </td>
+                                        </tbody>
+                                        <%})%>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <hr>
+                        <form action="/confirm-data" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="staff_id" value="<%= staff._id %>">
+                            <button type="submit">Xác nhận dữ liệu</button>
+                        </form>
+                        <% } %>
+                            <% } %>
+           
+            </main>
+            <%- include('./includes/end.ejs') %>

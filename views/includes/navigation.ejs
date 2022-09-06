@@ -1,0 +1,218 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="backdrop"></div>
+<header class="main-header">
+  <button id="side-menu-toggle">Menu</button>
+  <nav class="main-header__nav">
+    <ul class="main-header__item-list">
+      <li class="main-header__item">
+        <a class="<%= path === '/' ? 'active' : '' %>" href="/">
+          <i class="fa fa-home">
+            <span>
+              Trang Chủ
+            </span>
+          </i>
+        </a>
+      </li>
+      <% if(isAuthenticated){ %>
+      <li class="main-header__item">
+        <a class="<%= path === '/muster' ? 'active' : '' %>" href="/muster">
+          <i class="fa fa-id-card">
+            <span>
+              Điểm Danh
+            </span>
+          </i>
+        </a>
+      </li>
+      <li class="main-header__item">
+        <a class="<%= path === '/staff-info' ? 'active' : '' %>" href="/staff-info">
+          <i class="fa fa-user">
+            <span>
+              Thông Tin Cá Nhân
+            </span>
+          </i>
+        </a>
+      </li>
+      <li class="main-header__item">
+        <a class="<%= path === '/work-info' ? 'active' : '' %>" href="/work-info">
+          <i class="fa fa-calendar">
+            <span>
+              Giờ Làm Bản Thân
+            </span>
+          </i>
+        </a>
+      </li>
+      <li class="main-header__item">
+        <a class="<%= path === '/covid-info' ? 'active' : '' %>" href="/covid-info">
+          <i class="fa fa-fonticons">
+            <span>
+              Thông Tin Covid Cá Nhân
+            </span>
+          </i>
+        </a>
+      </li>
+      <% } %>
+      
+      <% if(isAdmin){ %>
+        <li class="main-header__item">
+          <a class="<%= path === '/confirm-work-hours' ? 'active' : '' %>" href="/confirm-work-hours">
+            <i class="fa fa-coffee">
+              <span>
+                Xác Nhận Giờ Làm 
+              </span>
+            </i>
+          </a>
+        </li>
+      <li class="main-header__item">
+        <a class="<%= path === '/add-staff' ? 'active' : '' %>" href="/add-staff">
+          <i class="fa fa-tasks">
+            <span>
+              Thêm Nhân Viên 
+            </span>
+          </i>
+        </a>
+      </li>
+      <% } %>
+
+    </ul>
+
+    <ul class="main-header__item-list">
+      <% if(!isAuthenticated){ %>
+        <li class="main-header__item">
+          <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">
+            <i class="fa fa-sign-in">
+              <span>
+                Login 
+              </span>
+            </i>
+          </a>
+        </li>
+
+        <li class="main-header__item">
+          <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">
+            <i class="fa fa-window-restore">
+              <span>
+                Đăng kí cho admin 
+              </span>
+            </i>
+          </a>
+        </li>
+        <% }else { %>
+          <li class="main-header__item">
+            <form action="/logout" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit">Logout</button>
+            </form>
+          </li>
+          <% } %>
+    </ul>
+  </nav>
+</header>
+
+<nav class="mobile-nav">
+  <ul class="mobile-nav__item-list">
+    <li class="mobile-nav__item">
+      <a class="<%= path === '/' ? 'active' : '' %>" href="/">
+        <i class="fa fa-home">
+          <span>
+            Trang Chủ
+          </span>
+        </i>
+      </a>
+    </li>
+
+    <% if(isAuthenticated) { %>
+    <li class="mobile-nav__item">
+      <a class="<%= path === '/muster' ? 'active' : '' %>" href="/muster">
+        <i class="fa fa-id-card">
+          <span>
+            Điểm Danh
+          </span>
+        </i>
+      </a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="<%= path === '/staff-info' ? 'active' : '' %>" href="/staff-info">
+        <i class="fa fa-user">
+          <span>
+            Thông Tin Cá Nhân
+          </span>
+        </i>
+      </a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="<%= path === '/work-info' ? 'active' : '' %>" href="/work-info">
+        <i class="fa fa-calendar">
+          <span>
+            Giờ Làm Bản Thân
+          </span>
+        </i>
+      </a>
+    </li>
+    <li class="mobile-nav__item">
+      <a class="<%= path === '/covid-info' ? 'active' : '' %>" href="/covid-info">
+        <i class="fa fa-fonticons">
+          <span>
+            Thông Tin Covid Cá Nhân
+          </span>
+        </i>
+      </a>
+    </li>
+    <% } %>
+
+    <% if(isAdmin){ %>
+      <li class="mobile-nav__item">
+        <a class="<%= path === '/confirm-work-hours' ? 'active' : '' %>" href="/confirm-work-hours">
+          <i class="fa fa-coffee">
+            <span>
+              Xác Nhận Giờ Làm 
+            </span>
+          </i>
+        </a>
+      </li>
+      <li class="mobile-nav__item">
+        <a class="<%= path === '/add-staff' ? 'active' : '' %>" href="/add-staff">
+          <i class="fa fa-tasks">
+            <span>
+              Thêm Nhân Viên 
+            </span>
+          </i>
+        </a>
+      </li>
+      <% } %>
+
+
+  </ul>
+
+  <ul class="mobile-nav__item-list">
+    <% if(!isAuthenticated){ %>
+      <li class="mobile-nav__item">
+        <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">
+          <i class="fa fa-sign-in">
+            <span>
+              Login 
+            </span>
+          </i>
+        </a>
+      </li>
+      <li class="mobile-nav__item">
+        <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">
+          <i class="fa fa-window-restore">
+            <span>
+              Đăng kí cho admin 
+            </span>
+          </i>
+        </a>
+      </li>
+      <% }else { %>
+        <li class="mobile-nav__item">
+          <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+        <% } %>
+  </ul>
+
+
+</nav>

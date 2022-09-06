@@ -1,0 +1,87 @@
+<hr>
+<main>
+    <div class="fluid">
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="grid">
+                    <article class="card product-item">
+                        <div class="card__image">
+                            <img src="/<%= staff.image %>" alt="<%= staff.name %>">
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="right card__actions col-xs-12 col-md-8">
+                <div>
+                    <i class="fa fa-id-card">
+                        <span>
+                            <%= staff._id %>
+                        </span>
+                    </i>
+                </div>
+                <div>
+                    <i class="fa fa-user">
+                        <span>
+                            <%= staff.name %>
+                        </span>
+                    </i>
+                </div>
+                <div>
+                    <i class="fa fa-birthday-cake">
+                        <span>
+                            <%= staff.doB.getFullYear() + "/" + staff.doB.getMonth() + "/" + staff.doB.getDate() %>
+                        </span>
+                    </i>
+                </div>
+                <div>
+                    <i class="fa fa-money">
+                        <span>
+                            <%= staff.salaryScale %>
+                        </span>
+                    </i>
+                </div>
+                <div>
+                    <i class="fa fa-calendar">
+                        <span>
+                            <%= staff.startDate.getFullYear() + "/" + staff.startDate.getMonth() + "/" +
+                                staff.startDate.getDate() %>
+                        </span>
+                    </i>
+                </div>
+                <div>
+                    <i class="fa fa-tasks">
+                        <span>
+                            <%= staff.department %>
+                        </span>
+                    </i>
+                </div>
+                <div>
+                    <i class="fa fa-calendar">
+                        <span></span>
+                        <%= staff.annualLeave %>
+                    </i>
+                </div>
+                <div>
+                    <form action="/staff-info" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                        <i class="fa fa-picture-o"><input type="file" name="image"
+                                id="image" />
+                        </i>
+                        <button type="submit">Chỉnh sửa</button>
+                    </form>
+                </div>
+                <div class="centered">
+                    <a href="/reset">Reset Password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+</main>
+<hr>
